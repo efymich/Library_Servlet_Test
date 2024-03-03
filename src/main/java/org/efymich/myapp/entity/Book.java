@@ -22,7 +22,7 @@ public class Book {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
-    Author authorId;
+    Author author;
 
     String genre;
 
