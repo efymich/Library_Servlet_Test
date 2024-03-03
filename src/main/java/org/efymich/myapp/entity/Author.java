@@ -15,7 +15,6 @@ import java.util.Set;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Author {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authors_seq")
     @SequenceGenerator(name = "authors_seq", sequenceName = "AUTHORS_SEQ")

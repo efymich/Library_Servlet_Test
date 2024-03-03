@@ -12,7 +12,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Student {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "students_seq")
     @SequenceGenerator(name = "students_seq", sequenceName = "STUDENTS_SEQ")

@@ -12,7 +12,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Book {
-
     @Id
     @Column(name = "book_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "books_seq")
@@ -29,5 +28,4 @@ public class Book {
 
     @Column(name = "publication_year")
     Long publicationYear;
-
 }

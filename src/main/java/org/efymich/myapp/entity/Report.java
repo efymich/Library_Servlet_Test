@@ -14,7 +14,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Report {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reports_seq")
     @SequenceGenerator(name = "reports_seq", sequenceName = "REPORTS_SEQ")
