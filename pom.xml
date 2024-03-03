@@ -7,6 +7,12 @@
   <version>1.0-SNAPSHOT</version>
   <name>Library_Servlet_Test Maven Webapp</name>
   <url>http://maven.apache.org</url>
+
+  <properties>
+          <hibernate_version>6.4.4.Final</hibernate_version>
+  </properties>
+
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -17,8 +23,7 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>6.4.4.Final</version>
-      <type>pom</type>
+      <version>${hibernate_version}</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -40,7 +45,16 @@
       <artifactId>javax.servlet-api</artifactId>
       <version>4.0.1</version>
     </dependency>
-
+    <dependency>
+      <groupId>com.oracle.database.jdbc</groupId>
+      <artifactId>ojdbc10</artifactId>
+      <version>19.21.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+      <version>1.5.6</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -50,6 +64,14 @@
         <version>4.25.1</version>
         <configuration>
           <propertyFile>liquibase/liquibase.properties</propertyFile>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>8</source>
+          <target>8</target>
         </configuration>
       </plugin>
     </plugins>
