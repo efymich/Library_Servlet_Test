@@ -55,6 +55,11 @@
       <artifactId>slf4j-jdk14</artifactId>
       <version>1.5.6</version>
     </dependency>
+    <dependency>
+      <groupId>org.hibernate.orm</groupId>
+      <artifactId>hibernate-hikaricp</artifactId>
+      <version>${hibernate_version}</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
