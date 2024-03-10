@@ -1,0 +1,34 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- JDBC connection settings -->
+        <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
+        <property name="hibernate.connection.url">jdbc:oracle:thin:@//localhost:1521/ORCLPDB</property>
+        <property name="hibernate.connection.username">TESTUSER</property>
+        <property name="hibernate.connection.password">TESTUSER</property>
+
+        <!-- SQL dialect for Oracle -->
+        <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
+
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="hibernate.current_session_context_class">thread</property>
+
+        <!-- Echo all executed SQL to stdout -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.highlight_sql">true</property>
+
+        <!-- Drop and create the database schema on startup -->
+        <property name="hibernate.hbm2ddl.auto">validate</property>
+
+        <!-- Mapping files -->
+        <!-- <mapping resource="com/example/YourEntity.hbm.xml"/> -->
+        <mapping class="org.efymich.myapp.entity.Author" />
+        <mapping class="org.efymich.myapp.entity.Student" />
+        <mapping class="org.efymich.myapp.entity.Book" />
+        <mapping class="org.efymich.myapp.entity.Report" />
+
+    </session-factory>
+</hibernate-configuration>
