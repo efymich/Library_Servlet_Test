@@ -14,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "students_seq")
-    @SequenceGenerator(name = "students_seq", sequenceName = "STUDENTS_SEQ")
+    @SequenceGenerator(name = "students_seq", sequenceName = "STUDENTS_SEQ",allocationSize = 1)
     @Column(name = "student_id")
     Long studentId;
 

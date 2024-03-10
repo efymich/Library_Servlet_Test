@@ -15,7 +15,7 @@ public class Book {
     @Id
     @Column(name = "book_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "books_seq")
-    @SequenceGenerator(name = "books_seq", sequenceName = "BOOKS_SEQ")
+    @SequenceGenerator(name = "books_seq", sequenceName = "BOOKS_SEQ",allocationSize = 1)
     Long bookId;
 
     String title;

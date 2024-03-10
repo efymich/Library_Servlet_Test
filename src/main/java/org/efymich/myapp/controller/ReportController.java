@@ -7,17 +7,17 @@ import org.efymich.myapp.entity.Report;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.servlet.IServletWebExchange;
-import org.thymeleaf.web.servlet.JavaxServletWebApplication;
+import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@WebServlet("/")
+@WebServlet("/reports")
 public class ReportController extends HttpServlet {
 
     private ReportDAO reportDAO;
@@ -36,7 +36,7 @@ public class ReportController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp){
         List<Report> reports = reportDAO.getReports();
 
-        IServletWebExchange servletWebExchange = JavaxServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
+        IServletWebExchange servletWebExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
 
         WebContext webContext = new WebContext(servletWebExchange);
 

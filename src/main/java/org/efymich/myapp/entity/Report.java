@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reports_seq")
-    @SequenceGenerator(name = "reports_seq", sequenceName = "REPORTS_SEQ")
+    @SequenceGenerator(name = "reports_seq", sequenceName = "REPORTS_SEQ",allocationSize = 1)
     @Column(name = "rental_id")
     Long rentalId;
 

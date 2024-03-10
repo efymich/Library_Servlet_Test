@@ -17,7 +17,7 @@ import java.util.Set;
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authors_seq")
-    @SequenceGenerator(name = "authors_seq", sequenceName = "AUTHORS_SEQ")
+    @SequenceGenerator(name = "authors_seq", sequenceName = "AUTHORS_SEQ",allocationSize = 1)
     @Column(name = "author_id")
     Long authorId;
 

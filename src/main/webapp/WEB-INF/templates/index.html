@@ -8,7 +8,7 @@
 <body>
     <div class="container">
         <ul class="list-group">
-            <li class="list-group-item" th:each="report : ${reports}">An item
+            <li class="list-group-item" th:each="report : ${reports}" th:text="${report.rentalDate}">
             </li>
         </ul>
     </div>

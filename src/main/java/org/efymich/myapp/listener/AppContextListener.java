@@ -9,12 +9,12 @@ import org.efymich.myapp.dao.ReportDAO;
 import org.efymich.myapp.dao.StudentDAO;
 import org.hibernate.SessionFactory;
 import org.thymeleaf.ITemplateEngine;
-import org.thymeleaf.web.servlet.JavaxServletWebApplication;
+import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.annotation.WebListener;
 
 @WebListener
 public class AppContextListener implements ServletContextListener {
@@ -22,7 +22,7 @@ public class AppContextListener implements ServletContextListener {
     @SneakyThrows
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext context = servletContextEvent.getServletContext();
-        JavaxServletWebApplication application = JavaxServletWebApplication.buildApplication(context);
+        JakartaServletWebApplication application = JakartaServletWebApplication.buildApplication(context);
         ThymeleafConfiguration thymeleafConfiguration = new ThymeleafConfiguration();
         ITemplateEngine templateEngine = thymeleafConfiguration.getTemplateEngine(application);
 
