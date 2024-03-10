@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@WebServlet("/reports")
+@WebServlet(urlPatterns = {"/reports"})
 public class ReportController extends HttpServlet {
 
     private ReportDAO reportDAO;
@@ -41,6 +41,6 @@ public class ReportController extends HttpServlet {
         WebContext webContext = new WebContext(servletWebExchange);
 
         webContext.setVariable("reports",reports);
-        templateEngine.process("index",webContext,resp.getWriter());
+        templateEngine.process("reports",webContext,resp.getWriter());
     }
 }
