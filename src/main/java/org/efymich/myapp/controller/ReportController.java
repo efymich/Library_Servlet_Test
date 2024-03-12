@@ -34,7 +34,7 @@ public class ReportController extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp){
-        List<Report> reports = reportDAO.getReports();
+        List<Report> reports = reportDAO.getAll();
 
         IServletWebExchange servletWebExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
 

@@ -10,10 +10,10 @@ import org.hibernate.query.Query;
 import java.util.List;
 
 @AllArgsConstructor
-public class BookDAO {
+public class BookDAO implements BaseDAO<Book>{
     private SessionFactory sessionFactory;
 
-    public List<Book> getBooks() {
+    public List<Book> getAll() {
         Session session = sessionFactory.openSession();
         Query<Book> books = session.createQuery("From Book", Book.class);
         return books.getResultList();

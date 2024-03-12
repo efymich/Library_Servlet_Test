@@ -10,11 +10,11 @@ import org.hibernate.query.Query;
 import java.util.List;
 
 @AllArgsConstructor
-public class ReportDAO {
+public class ReportDAO implements BaseDAO<Report>{
 
     private SessionFactory sessionFactory;
 
-    public List<Report> getReports() {
+    public List<Report> getAll() {
         Session session = sessionFactory.openSession();
         Query<Report> reports = session.createQuery("From Report", Report.class);
         return reports.getResultList();

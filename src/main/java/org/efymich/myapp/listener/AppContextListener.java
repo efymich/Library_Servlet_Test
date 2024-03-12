@@ -7,6 +7,7 @@ import org.efymich.myapp.dao.AuthorDAO;
 import org.efymich.myapp.dao.BookDAO;
 import org.efymich.myapp.dao.ReportDAO;
 import org.efymich.myapp.dao.StudentDAO;
+import org.efymich.myapp.service.StudentService;
 import org.hibernate.SessionFactory;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
@@ -31,13 +32,15 @@ public class AppContextListener implements ServletContextListener {
         AuthorDAO authorDAO = new AuthorDAO(sessionFactory);
         BookDAO bookDAO = new BookDAO(sessionFactory);
         ReportDAO reportDAO = new ReportDAO(sessionFactory);
+        StudentService studentService = new StudentService(studentDAO);
 
         context.setAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATTR,templateEngine);
         context.setAttribute("sessionFactory",sessionFactory);
-        context.setAttribute("studentDAO",studentDAO);
+        context.setAttribute("studentService",studentService);
         context.setAttribute("authorDAO",authorDAO);
         context.setAttribute("bookDAO",bookDAO);
         context.setAttribute("reportDAO",reportDAO);
+
     }
 
     @Override
