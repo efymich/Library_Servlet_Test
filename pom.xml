@@ -12,6 +12,7 @@
     <hibernate_version>6.4.4.Final</hibernate_version>
     <thymeleaf_version>3.1.2.RELEASE</thymeleaf_version>
     <slf4j.version>2.0.11</slf4j.version>
+    <liquibase.version>4.25.1</liquibase.version>
   </properties>
 
 
@@ -69,15 +70,31 @@
       <artifactId>thymeleaf</artifactId>
       <version>${thymeleaf_version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+      <version>${liquibase.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>at.favre.lib</groupId>
+      <artifactId>bcrypt</artifactId>
+      <version>0.10.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate.validator</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>8.0.1.Final</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
       <plugin>
         <groupId>org.liquibase</groupId>
         <artifactId>liquibase-maven-plugin</artifactId>
-        <version>4.25.1</version>
+        <version>${liquibase.version}</version>
         <configuration>
-          <propertyFile>liquibase/liquibase.properties</propertyFile>
+          <propertyFile>src/main/resources/liquibase/liquibase.properties</propertyFile>
+          <changeLogFile>src/main/resources/db/changelog/master.xml</changeLogFile>
         </configuration>
       </plugin>
       <plugin>

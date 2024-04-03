@@ -1,4 +1,4 @@
-package org.efymich.myapp.controller;
+package org.efymich.myapp.servlet;
 
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -14,7 +14,7 @@ import org.thymeleaf.web.servlet.IServletWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
 @WebServlet("/")
-public class MenuController extends HttpServlet {
+public class MenuServlet extends HttpServlet {
 
     private TemplateEngine templateEngine;
 

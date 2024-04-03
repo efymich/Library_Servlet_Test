@@ -1,8 +1,12 @@
 package org.efymich.myapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.efymich.myapp.enums.Roles;
 
 @Entity
 @Table(name = "students")
@@ -18,8 +22,14 @@ public class Student {
     @Column(name = "student_id")
     Long studentId;
 
+    @NotEmpty(message = "please put name")
     @Column(name = "student_name")
     String studentName;
 
-    String major;
+    @Enumerated(EnumType.STRING)
+    Roles role;
+
+    @NotNull(message = "please put password")
+//    @Size(min = 8,max = 20,message = "password should comply with requirements")
+    String password;
 }

@@ -1,4 +1,4 @@
-package org.efymich.myapp.controller;
+package org.efymich.myapp.servlet;
 
 import lombok.SneakyThrows;
 import org.efymich.myapp.config.ThymeleafConfiguration;
@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/reports"})
-public class ReportController extends HttpServlet {
+public class ReportServlet extends HttpServlet {
 
     private ReportDAO reportDAO;
 

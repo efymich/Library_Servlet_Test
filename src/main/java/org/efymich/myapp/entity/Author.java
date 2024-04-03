@@ -3,6 +3,7 @@ package org.efymich.myapp.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.efymich.myapp.converter.NationalityConverter;
 import org.efymich.myapp.enums.Nationalities;
 
 import java.util.Set;
@@ -24,7 +25,7 @@ public class Author {
     @Column(name = "author_name")
     String authorName;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = NationalityConverter.class)
     Nationalities nationality;
 
     @OneToMany(mappedBy = "author")

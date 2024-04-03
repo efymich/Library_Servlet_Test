@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 public class ReportDAO implements BaseDAO<Report>{
@@ -18,6 +19,11 @@ public class ReportDAO implements BaseDAO<Report>{
         Session session = sessionFactory.openSession();
         Query<Report> reports = session.createQuery("From Report", Report.class);
         return reports.getResultList();
+    }
+
+    @Override
+    public List<Report> getAll(String sortParameter) {
+        return null;
     }
 
     public Report getById(Long id) {
@@ -46,6 +52,11 @@ public class ReportDAO implements BaseDAO<Report>{
         Transaction transaction = session.beginTransaction();
         session.remove(getById(id));
         transaction.commit();
+    }
+
+    @Override
+    public Set<String> getColumnNames(Class<Report> entityClass) {
+        return null;
     }
 
 }

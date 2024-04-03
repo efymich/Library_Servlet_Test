@@ -1,9 +1,10 @@
 package org.efymich.myapp.dao;
 
 import java.util.List;
+import java.util.Set;
 
 public interface BaseDAO<T> {
-    List<T> getAll();
+    List<T> getAll(String sortParameter);
 
     T getById(Long id);
 
@@ -12,5 +13,7 @@ public interface BaseDAO<T> {
     void update(T obj);
 
     void delete(Long id);
+
+    Set<String> getColumnNames(Class<T> entityClass);
 
 }

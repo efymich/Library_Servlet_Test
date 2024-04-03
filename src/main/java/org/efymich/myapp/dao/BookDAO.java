@@ -1,22 +1,38 @@
 package org.efymich.myapp.dao;
 
+import jakarta.persistence.metamodel.Attribute;
+import jakarta.persistence.metamodel.EntityType;
+import jakarta.persistence.metamodel.Metamodel;
 import lombok.AllArgsConstructor;
 import org.efymich.myapp.entity.Book;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.hibernate.query.criteria.HibernateCriteriaBuilder;
+import org.hibernate.query.criteria.JpaCriteriaQuery;
+import org.hibernate.query.criteria.JpaRoot;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class BookDAO implements BaseDAO<Book>{
     private SessionFactory sessionFactory;
 
-    public List<Book> getAll() {
+    public List<Book> getAll(String sort) {
         Session session = sessionFactory.openSession();
-        Query<Book> books = session.createQuery("From Book", Book.class);
-        return books.getResultList();
+        HibernateCriteriaBuilder builder = session.getCriteriaBuilder();
+        JpaCriteriaQuery<Book> critQuery = builder.createQuery(Book.class);
+        JpaRoot<Book> root = critQuery.from(Book.class);
+
+        if (sort != null && !sort.isEmpty()) {
+            critQuery.select(root).orderBy(builder.asc(root.get(sort)));
+        }
+
+        Query<Book> booksQuery = session.createQuery(critQuery);
+        return booksQuery.getResultList();
     }
 
     public Book getById(Long id) {
@@ -46,5 +62,15 @@ public class BookDAO implements BaseDAO<Book>{
         Transaction transaction = session.beginTransaction();
         session.remove(getById(id));
         transaction.commit();
+    }
+
+    @Override
+    public Set<String> getColumnNames(Class<Book> entityClass) {
+        Metamodel metamodel = sessionFactory.getMetamodel();
+        EntityType<Book> entity = metamodel.entity(entityClass);
+        return entity.getAttributes().stream()
+                .filter(x -> !x.isAssociation())
+                .map(Attribute::getName)
+                .collect(Collectors.toSet());
     }
 }

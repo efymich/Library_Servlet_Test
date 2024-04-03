@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 public class AuthorDAO implements BaseDAO<Author>{
@@ -17,6 +18,11 @@ public class AuthorDAO implements BaseDAO<Author>{
         Session session = sessionFactory.openSession();
         Query<Author> authors = session.createQuery("From Author", Author.class);
         return authors.getResultList();
+    }
+
+    @Override
+    public List<Author> getAll(String sortParameter) {
+        return null;
     }
 
     public Author getById(Long id) {
@@ -45,5 +51,10 @@ public class AuthorDAO implements BaseDAO<Author>{
         Transaction transaction = session.beginTransaction();
         session.remove(getById(id));
         transaction.commit();
+    }
+
+    @Override
+    public Set<String> getColumnNames(Class<Author> entityClass) {
+        return null;
     }
 }
