@@ -14,13 +14,13 @@ import java.util.Set;
 public class AuthorDAO implements BaseDAO<Author>{
     private SessionFactory sessionFactory;
 
+    @Override
     public List<Author> getAll() {
         Session session = sessionFactory.openSession();
         Query<Author> authors = session.createQuery("From Author", Author.class);
         return authors.getResultList();
     }
 
-    @Override
     public List<Author> getAll(String sortParameter) {
         return null;
     }

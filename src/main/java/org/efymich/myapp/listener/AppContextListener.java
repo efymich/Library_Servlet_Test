@@ -16,6 +16,7 @@ import org.efymich.myapp.dao.ReportDAO;
 import org.efymich.myapp.dao.StudentDAO;
 import org.efymich.myapp.service.AuthService;
 import org.efymich.myapp.service.BookService;
+import org.efymich.myapp.service.ReportService;
 import org.efymich.myapp.service.StudentService;
 import org.hibernate.SessionFactory;
 import org.thymeleaf.ITemplateEngine;
@@ -54,8 +55,9 @@ public class AppContextListener implements ServletContextListener {
         ReportDAO reportDAO = new ReportDAO(sessionFactory);
 
         // Service beans
+        ReportService reportService = new ReportService(reportDAO);
         StudentService studentService = new StudentService(studentDAO);
-        BookService bookService = new BookService(bookDAO);
+        BookService bookService = new BookService(bookDAO,reportService);
         AuthService authService = new AuthService(studentDAO);
 
         // Setting attributes
@@ -64,8 +66,8 @@ public class AppContextListener implements ServletContextListener {
         context.setAttribute("validator",validator);
 
         context.setAttribute("authorDAO",authorDAO);
-        context.setAttribute("reportDAO",reportDAO);
 
+        context.setAttribute("reportService",reportService);
         context.setAttribute("bookService",bookService);
         context.setAttribute("studentService",studentService);
         context.setAttribute("authService",authService);

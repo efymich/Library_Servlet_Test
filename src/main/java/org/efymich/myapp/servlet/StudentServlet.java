@@ -6,10 +6,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import lombok.SneakyThrows;
 import org.efymich.myapp.config.ThymeleafConfiguration;
 import org.efymich.myapp.entity.Student;
+import org.efymich.myapp.enums.Roles;
 import org.efymich.myapp.service.StudentService;
+import org.efymich.myapp.utils.PasswordUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.servlet.IServletWebExchange;
@@ -19,44 +23,69 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-@WebServlet(urlPatterns = {"/students"})
+@WebServlet(urlPatterns = {"/student/*"})
 public class StudentServlet extends HttpServlet {
     private TemplateEngine templateEngine;
 
     private StudentService studentService;
+    private Validator validator;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         templateEngine = (TemplateEngine) getServletContext().getAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATTR);
         studentService = (StudentService) getServletContext().getAttribute("studentService");
+        validator = (Validator) getServletContext().getAttribute("validator");
     }
 
     @Override
     @SneakyThrows
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        String sortParameter = req.getParameter("sort");
-        Set<String> columnNames = studentService.getColumnNames(Student.class);
-        List<Student> students = studentService.getAll(sortParameter);
-
         IServletWebExchange servletWebExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
-
         WebContext webContext = new WebContext(servletWebExchange);
 
-        webContext.setVariable("students",students);
-        webContext.setVariable("columnNames",columnNames);
-        templateEngine.process("students",webContext,resp.getWriter());
+        String pathInfo = req.getPathInfo();
+
+        if (pathInfo.equals("/")) {
+            String sortParameter = req.getParameter("sort");
+            Set<String> columnNames = studentService.getColumnNames(Student.class);
+            List<Student> students = studentService.getAll(sortParameter);
+
+
+            webContext.setVariable("students", students);
+            webContext.setVariable("columnNames", columnNames);
+            templateEngine.process("student", webContext, resp.getWriter());
+
+        } else if (pathInfo.equals("/new")) {
+            templateEngine.process("new", webContext, resp.getWriter());
+        } else {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
     }
 
     @SneakyThrows
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp){
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+        IServletWebExchange servletWebExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
+        WebContext webContext = new WebContext(servletWebExchange);
+
         String studentName = req.getParameter("studentName");
-        Student student = Student.builder()
+        String password = req.getParameter("password");
+        Student inputStudent = Student.builder()
                 .studentName(studentName)
+                .password(password)
+                .role(Roles.USER)
                 .build();
+        Set<ConstraintViolation<Student>> violations = validator.validate(inputStudent);
 
-        studentService.create(student);
+        if (violations.isEmpty()){
+            inputStudent.setPassword(PasswordUtils.hashPassword(password));
+            studentService.create(inputStudent);
+            templateEngine.process("index", webContext, resp.getWriter());
+        } else {
+            req.setAttribute("errorMessage",violations.iterator().next().getMessage());
+            templateEngine.process("new",webContext, resp.getWriter());
+        }
 
-        resp.sendRedirect(req.getContextPath() + "/students");
     }
 
     @Override

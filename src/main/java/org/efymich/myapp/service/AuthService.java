@@ -10,7 +10,7 @@ import org.efymich.myapp.utils.PasswordUtils;
 public class AuthService {
     private StudentDAO studentDAO;
 
-    public ValidationStudentDTO checkPassword(Student inputStudent){
+    public ValidationStudentDTO checkPassword(Student inputStudent) {
         Student student = studentDAO.getByName(inputStudent.getStudentName());
 
         if (student == null) {
@@ -20,8 +20,7 @@ public class AuthService {
                     .build();
         }
 
-//        boolean flag = PasswordUtils.verifyPassword(password, student.getPassword());
-        boolean flag = inputStudent.getPassword().equals(student.getPassword());
+        boolean flag = PasswordUtils.verifyPassword(inputStudent.getPassword(), student.getPassword());
 
         if (!flag) {
             return ValidationStudentDTO.builder()

@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Set;
 
 public interface BaseDAO<T> {
-    List<T> getAll(String sortParameter);
 
+    List<T> getAll();
     T getById(Long id);
 
     void create(T obj);

@@ -19,16 +19,20 @@
                     <th scope="col">Author</th>
                     <th scope="col">Genre</th>
                     <th scope="col">Publication_Year</th>
+                    <th scope="col">Take Book</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="book : ${books}">
-                    <td th:text="${book.bookId}">Id</td>
-                    <td th:text="${book.title}">Title</td>
-                    <td th:text="${book.author.authorName}">Author</td>
-                    <td th:text="${book.genre}">Genre</td>
-                    <td th:text="${book.publicationYear}">Publication_Year</td>
-                </tr>
+                    <form th:method="post" th:action="@{/report}">
+                        <tr th:each="book : ${freeBooks}">
+                            <td th:text="${book.bookId}">Id</td>
+                            <td th:text="${book.title}">Title</td>
+                            <td th:text="${book.author.authorName}">Author</td>
+                            <td th:text="${book.genre}">Genre</td>
+                            <td th:text="${book.publicationYear}">Publication_Year</td>
+                            <td><button type="button" class="btn btn-link" >Take book</button></td>
+                        </tr>
+                    </form>
                 </tbody>
             </table>
         </form>

@@ -2,8 +2,8 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <div th:insert="~{header :: header}"></div>
 <body>
-    <h2>Authentication</h2>
-    <form method="post" th:action="@{/login}" >
+    <h2>Create new user</h2>
+    <form method="post" th:action="@{/student}">
         <div class="mb-3">
             <label for="input-studentName" class="form-label">Student name</label>
             <input type="text" class="form-control" id="input-studentName" th:name="studentName">
@@ -11,18 +11,15 @@
         <div class="mb-3">
             <label for="inputPassword" class="form-label">Password</label>
             <input type="password" id="inputPassword" class="form-control" aria-describedby="passwordHelpBlock"
-            th:name="password">
+                   th:name="password">
             <div id="passwordHelpBlock" class="form-text">
-                Your password must be 6-20 characters long.
+                Your password must be from 6 characters long.
             </div>
         </div>
-        <div class="alert alert-warning" role="alert" th:if="${errorMessage}" >
+        <div class="alert alert-warning" role="alert" th:if="${errorMessage}">
             <span th:text="${errorMessage}"></span>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-    <div>
-        <a th:href="@{/student/new}" >Создать студента</a>
-    </div>
 </body>
 </html>

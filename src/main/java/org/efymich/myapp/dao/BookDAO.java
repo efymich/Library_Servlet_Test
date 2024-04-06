@@ -21,6 +21,11 @@ import java.util.stream.Collectors;
 public class BookDAO implements BaseDAO<Book>{
     private SessionFactory sessionFactory;
 
+    @Override
+    public List<Book> getAll() {
+        return null;
+    }
+
     public List<Book> getAll(String sort) {
         Session session = sessionFactory.openSession();
         HibernateCriteriaBuilder builder = session.getCriteriaBuilder();
@@ -72,5 +77,13 @@ public class BookDAO implements BaseDAO<Book>{
                 .filter(x -> !x.isAssociation())
                 .map(Attribute::getName)
                 .collect(Collectors.toSet());
+    }
+
+    public List<Book> getAllFreeBooks(){
+        Session session = sessionFactory.openSession();
+        Query<Book> query = session.createQuery("SELECT b FROM Book b " +
+                "left join b.report rep " +
+                "WHERE rep.book is null or rep.returnDate is not null",Book.class);
+        return query.getResultList();
     }
 }

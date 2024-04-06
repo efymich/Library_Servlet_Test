@@ -4,7 +4,6 @@ import jakarta.persistence.metamodel.Attribute;
 import jakarta.persistence.metamodel.EntityType;
 import jakarta.persistence.metamodel.Metamodel;
 import lombok.AllArgsConstructor;
-import org.efymich.myapp.entity.Book;
 import org.efymich.myapp.entity.Student;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,13 +11,17 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class StudentDAO implements BaseDAO<Student>{
     private SessionFactory sessionFactory;
+
+    @Override
+    public List<Student> getAll() {
+        return null;
+    }
 
     public List<Student> getAll(String sortParameter) {
         Session session = sessionFactory.openSession();

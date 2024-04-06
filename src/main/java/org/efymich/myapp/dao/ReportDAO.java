@@ -11,27 +11,27 @@ import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
-public class ReportDAO implements BaseDAO<Report>{
+public class ReportDAO implements BaseDAO<Report> {
 
     private SessionFactory sessionFactory;
 
+    @Override
     public List<Report> getAll() {
         Session session = sessionFactory.openSession();
         Query<Report> reports = session.createQuery("From Report", Report.class);
         return reports.getResultList();
     }
 
-    @Override
     public List<Report> getAll(String sortParameter) {
         return null;
     }
 
     public Report getById(Long id) {
         Session session = sessionFactory.openSession();
-        return session.get(Report.class,id);
+        return session.get(Report.class, id);
     }
 
-    public void create(Report report){
+    public void create(Report report) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.persist(report);
@@ -59,4 +59,10 @@ public class ReportDAO implements BaseDAO<Report>{
         return null;
     }
 
+    public List<Report> getByStudentId(Long studentId) {
+        Session session = sessionFactory.openSession();
+        Query<Report> query = session.createQuery("From Report r where r.student.id = :studentId ", Report.class);
+        query.setParameter("studentId", studentId);
+        return query.getResultList();
+    }
 }

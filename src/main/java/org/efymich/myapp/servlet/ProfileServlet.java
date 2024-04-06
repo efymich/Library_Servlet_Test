@@ -13,9 +13,10 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.servlet.IServletWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
-@WebServlet(urlPatterns = {"/"})
-public class MenuServlet extends HttpServlet {
+import java.io.IOException;
 
+@WebServlet(urlPatterns = {"/profile"})
+public class ProfileServlet extends HttpServlet {
     private TemplateEngine templateEngine;
 
     @Override
@@ -28,8 +29,14 @@ public class MenuServlet extends HttpServlet {
     @SneakyThrows
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         IServletWebExchange servletWebExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
+
         WebContext webContext = new WebContext(servletWebExchange);
 
-        templateEngine.process("index",webContext,resp.getWriter());
+        templateEngine.process("profile",webContext,resp.getWriter());
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPost(req, resp);
     }
 }

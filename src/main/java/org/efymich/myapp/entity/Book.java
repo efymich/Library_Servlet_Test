@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Entity
 @Table(name = "books")
 @NoArgsConstructor
@@ -28,4 +30,7 @@ public class Book {
 
     @Column(name = "publication_year")
     Long publicationYear;
+
+    @OneToMany(mappedBy = "book")
+    List<Report> report;
 }

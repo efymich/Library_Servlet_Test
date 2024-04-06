@@ -25,7 +25,6 @@ public class AuthFilter implements Filter {
     @Override
     @SneakyThrows
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain){
-
         HttpServletRequest httpServletRequest = (HttpServletRequest) req;
         HttpServletResponse httpServletResponse = (HttpServletResponse) resp;
         IServletWebExchange servletWebExchange = JakartaServletWebApplication.buildApplication(httpServletRequest.getServletContext()).buildExchange(httpServletRequest, httpServletResponse);

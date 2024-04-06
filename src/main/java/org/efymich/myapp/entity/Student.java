@@ -2,17 +2,18 @@ package org.efymich.myapp.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.efymich.myapp.enums.Roles;
 
+import java.util.List;
+
 @Entity
 @Table(name = "students")
 @NoArgsConstructor
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Student {
@@ -29,7 +30,10 @@ public class Student {
     @Enumerated(EnumType.STRING)
     Roles role;
 
-    @NotNull(message = "please put password")
-//    @Size(min = 8,max = 20,message = "password should comply with requirements")
+    @NotEmpty(message = "please put password")
+    @Size(min = 6,message = "password should comply with requirements")
     String password;
+
+    @OneToMany(mappedBy = "student")
+    List<Report> reports;
 }
