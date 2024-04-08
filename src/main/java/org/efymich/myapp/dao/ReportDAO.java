@@ -1,6 +1,7 @@
 package org.efymich.myapp.dao;
 
 import lombok.AllArgsConstructor;
+import org.efymich.myapp.entity.Book;
 import org.efymich.myapp.entity.Report;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -41,9 +42,7 @@ public class ReportDAO implements BaseDAO<Report> {
     public void update(Report updatedReport) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Report updatingReport = getById(updatedReport.getRentalId());
-        updatingReport.setRentalDate(updatedReport.getRentalDate());
-        updatingReport.setReturnDate(updatedReport.getReturnDate());
+        session.merge(updatedReport);
         transaction.commit();
     }
 
@@ -65,4 +64,19 @@ public class ReportDAO implements BaseDAO<Report> {
         query.setParameter("studentId", studentId);
         return query.getResultList();
     }
+
+    public List<Report> getByBookId(Long bookId) {
+        Session session = sessionFactory.openSession();
+        Query<Report> query = session.createQuery("From Report r where r.book.id = :bookId ", Report.class);
+        query.setParameter("bookId", bookId);
+        return query.getResultList();
+    }
+
+    public Report getReportOfHeldBook(Long studentId, Long bookId){
+        List<Report> reportList = getByStudentId(studentId);
+        return reportList.stream().filter(report -> report.getReturnDate() == null)
+                .filter(report -> report.getBook().getBookId().equals(bookId))
+                .findFirst().orElseThrow();
+    }
+
 }

@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<div th:insert="~{header :: header}" th:with="pageTitle='Books'"></div>
+<div th:insert="~{header :: header}" th:with="pageTitle='Profile'"></div>
 <body>
-<div th:insert="~{admin/navigation :: navbar_admin}"></div>
-<div class="container">
-    <form method="get" th:href="@{/books}">
-        <select id="currency" name="sort" class="form-select" style="width: min-content">
-            <option th:each="column : ${columnNames}" th:value="${column}" th:text="${column}"></option>
-        </select>
-        <button type="submit" class="btn btn-primary">Sort</button>
-
-        <table class="table table-group-divider">
+    <div th:insert="~{navigation :: navbar}"></div>
+    <h2>My books</h2>
+    <div class="container" style="margin-top: 15px">
+        <form id="takeBook" method="post" th:action="@{/reports}">
+            <table class="table table-border">
             <thead>
             <tr>
                 <th scope="col">Id</th>
@@ -18,19 +14,25 @@
                 <th scope="col">Author</th>
                 <th scope="col">Genre</th>
                 <th scope="col">Publication_Year</th>
+                <th scope="col">Give book back</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="book : ${books}">
+            <tr th:each="book : ${myBooks}">
                 <td th:text="${book.bookId}">Id</td>
                 <td th:text="${book.title}">Title</td>
                 <td th:text="${book.author.authorName}">Author</td>
                 <td th:text="${book.genre}">Genre</td>
                 <td th:text="${book.publicationYear}">Publication_Year</td>
+                <td>
+                    <input type="hidden" name="_method" value="PUT">
+                    <input type="hidden" th:name="bookId" th:value="${book.bookId}">
+                    <button type="submit" class="btn btn-link" >Give book back</button>
+                </td>
             </tr>
             </tbody>
         </table>
-    </form>
-</div>
+        </form>
+    </div>
 </body>
 </html>

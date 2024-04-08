@@ -30,6 +30,6 @@ public class MenuServlet extends HttpServlet {
         IServletWebExchange servletWebExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
         WebContext webContext = new WebContext(servletWebExchange);
 
-        templateEngine.process("index",webContext,resp.getWriter());
+        templateEngine.process("index", webContext, resp.getWriter());
     }
 }

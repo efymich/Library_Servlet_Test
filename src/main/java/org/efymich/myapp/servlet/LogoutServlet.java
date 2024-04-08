@@ -18,6 +18,7 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 public class LogoutServlet extends HttpServlet {
 
     private TemplateEngine templateEngine;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -26,13 +27,13 @@ public class LogoutServlet extends HttpServlet {
 
     @Override
     @SneakyThrows
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp){
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         IServletWebExchange servletWebExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
 
         WebContext webContext = new WebContext(servletWebExchange);
 
         HttpSession session = req.getSession();
         session.removeAttribute("student");
-        templateEngine.process("login",webContext,resp.getWriter());
+        templateEngine.process("login", webContext, resp.getWriter());
     }
 }

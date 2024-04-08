@@ -82,8 +82,8 @@ public class BookDAO implements BaseDAO<Book>{
     public List<Book> getAllFreeBooks(){
         Session session = sessionFactory.openSession();
         Query<Book> query = session.createQuery("SELECT b FROM Book b " +
-                "left join b.report rep " +
-                "WHERE rep.book is null or rep.returnDate is not null",Book.class);
+                "LEFT JOIN Report r ON b.id = r.book.id AND r.returnDate IS NULL " +
+                "WHERE r.rentalId is null",Book.class);
         return query.getResultList();
     }
 }

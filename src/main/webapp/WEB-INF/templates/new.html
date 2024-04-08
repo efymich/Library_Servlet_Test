@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<div th:insert="~{header :: header}"></div>
+<div th:insert="~{header :: header}" th:with="pageTitle='Create New Student'"></div>
 <body>
     <h2>Create new user</h2>
     <form method="post" th:action="@{/student}">

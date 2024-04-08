@@ -35,7 +35,7 @@ public class AuthServlet extends HttpServlet {
         IServletWebExchange servletWebExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
         WebContext webContext = new WebContext(servletWebExchange);
 
-        templateEngine.process("login",webContext,resp.getWriter());
+        templateEngine.process("login", webContext, resp.getWriter());
     }
 
     @Override

@@ -6,9 +6,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" th:href="@{/reports}">Reports</a>
+                <a class="nav-link active" aria-current="page" th:href="@{/admin/reports}">Reports</a>
                 <a class="nav-link active" th:href="@{/admin/books}">Books</a>
-                <a class="nav-link active" th:href="@{/student}">Students</a>
+                <a class="nav-link active" th:href="@{/admin/student}">Students</a>
                 <div th:if="${session.containsKey('student')}">
                     <a class="nav-link active" th:href="@{/logout}">Logout</a>
                 </div>

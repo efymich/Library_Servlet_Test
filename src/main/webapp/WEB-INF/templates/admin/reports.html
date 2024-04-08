@@ -2,11 +2,32 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <div th:insert="~{header :: header}"></div>
 <body>
-    <div th:insert="~{navigation :: navbar}"></div>
+    <div th:insert="~{admin/navigation :: navbar_admin}"></div>
+    <h2>Reports</h2>
 <!--    <div class="container">-->
 <!--        <ul class="list-group">-->
 <!--            <li class="list-group-item" th:each="report : ${reports}" th:text="${report.rentalDate}"></li>-->
 <!--        </ul>-->
 <!--    </div>-->
+    <table class="table table-group-divider">
+        <thead>
+        <tr>
+            <th scope="col">Rental_id</th>
+            <th scope="col">Book</th>
+            <th scope="col">Student_Name</th>
+            <th scope="col">Rental_Date</th>
+            <th scope="col">Return_Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="report : ${reports}">
+            <td th:text="${report.rentalId}">Rental_id</td>
+            <td th:text="${report.book.title}">Book</td>
+            <td th:text="${report.student.studentName}">Student_Name</td>
+            <td th:text="${report.rentalDate}">Rental_Date</td>
+            <td th:text="${report.returnDate}">Return_Date</td>
+        </tr>
+        </tbody>
+    </table>
 </body>
 </html>

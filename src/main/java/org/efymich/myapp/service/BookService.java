@@ -2,6 +2,7 @@ package org.efymich.myapp.service;
 
 import lombok.AllArgsConstructor;
 import org.efymich.myapp.dao.BookDAO;
+import org.efymich.myapp.dao.ReportDAO;
 import org.efymich.myapp.entity.Book;
 import org.efymich.myapp.entity.Report;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class BookService {
     private BookDAO bookDAO;
-    private ReportService reportService;
+    private ReportDAO reportDAO;
 
     public List<Book> getAll(String sortParameter) {
         return bookDAO.getAll(sortParameter);
@@ -38,7 +39,7 @@ public class BookService {
     }
 
     public List<Book> getBooksHeldByStudent(Long studentId){
-        List<Report> reportList = reportService.getByStudentId(studentId);
+        List<Report> reportList = reportDAO.getByStudentId(studentId);
         return reportList.stream().filter(report -> report.getReturnDate() == null)
                 .map(Report::getBook).toList();
     }

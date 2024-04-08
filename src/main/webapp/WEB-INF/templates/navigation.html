@@ -7,7 +7,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link active" th:href="@{/books}">Books</a>
-                <a class="nav-link active" th:href="@{/edit}">Edit</a>
+                <a class="nav-link active" th:href="@{/profile}">Profile</a>
                 <div th:if="${session.containsKey('student')}">
                     <a class="nav-link active" th:href="@{/logout}">Logout</a>
                 </div>

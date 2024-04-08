@@ -14,10 +14,7 @@ import org.efymich.myapp.dao.AuthorDAO;
 import org.efymich.myapp.dao.BookDAO;
 import org.efymich.myapp.dao.ReportDAO;
 import org.efymich.myapp.dao.StudentDAO;
-import org.efymich.myapp.service.AuthService;
-import org.efymich.myapp.service.BookService;
-import org.efymich.myapp.service.ReportService;
-import org.efymich.myapp.service.StudentService;
+import org.efymich.myapp.service.*;
 import org.hibernate.SessionFactory;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
@@ -55,10 +52,10 @@ public class AppContextListener implements ServletContextListener {
         ReportDAO reportDAO = new ReportDAO(sessionFactory);
 
         // Service beans
-        ReportService reportService = new ReportService(reportDAO);
         StudentService studentService = new StudentService(studentDAO);
-        BookService bookService = new BookService(bookDAO,reportService);
+        BookService bookService = new BookService(bookDAO,reportDAO);
         AuthService authService = new AuthService(studentDAO);
+        ReportService reportService = new ReportService(reportDAO,bookDAO);
 
         // Setting attributes
         context.setAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATTR,templateEngine);

@@ -23,10 +23,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-@WebServlet(urlPatterns = {"/student/*"})
+@WebServlet(urlPatterns = {"/student/*", "/admin/student"})
 public class StudentServlet extends HttpServlet {
     private TemplateEngine templateEngine;
-
     private StudentService studentService;
     private Validator validator;
 
@@ -45,8 +44,9 @@ public class StudentServlet extends HttpServlet {
         WebContext webContext = new WebContext(servletWebExchange);
 
         String pathInfo = req.getPathInfo();
+        String servletPath = req.getServletPath();
 
-        if (pathInfo.equals("/")) {
+        if (servletPath.contains("admin")) {
             String sortParameter = req.getParameter("sort");
             Set<String> columnNames = studentService.getColumnNames(Student.class);
             List<Student> students = studentService.getAll(sortParameter);
@@ -54,9 +54,8 @@ public class StudentServlet extends HttpServlet {
 
             webContext.setVariable("students", students);
             webContext.setVariable("columnNames", columnNames);
-            templateEngine.process("student", webContext, resp.getWriter());
-
-        } else if (pathInfo.equals("/new")) {
+            templateEngine.process("admin/student", webContext, resp.getWriter());
+        } else if (servletPath.equals("/student") && pathInfo.equals("/new")) {
             templateEngine.process("new", webContext, resp.getWriter());
         } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -77,19 +76,14 @@ public class StudentServlet extends HttpServlet {
                 .build();
         Set<ConstraintViolation<Student>> violations = validator.validate(inputStudent);
 
-        if (violations.isEmpty()){
+        if (violations.isEmpty()) {
             inputStudent.setPassword(PasswordUtils.hashPassword(password));
             studentService.create(inputStudent);
-            templateEngine.process("index", webContext, resp.getWriter());
+            resp.sendRedirect(req.getContextPath() + "/");
         } else {
-            req.setAttribute("errorMessage",violations.iterator().next().getMessage());
+            req.setAttribute("errorMessage", violations.iterator().next().getMessage());
             templateEngine.process("new",webContext, resp.getWriter());
         }
 
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
     }
 }
