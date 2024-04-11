@@ -15,13 +15,12 @@ public class BookService {
     private BookDAO bookDAO;
     private ReportDAO reportDAO;
 
-    public List<Book> getAll(String sortParameter, Integer currentPage) {
-        return bookDAO.getAll(sortParameter, currentPage);
+    public List<Book> getAll(Integer currentPage, String sortParameter) {
+        return bookDAO.getAll(currentPage, sortParameter);
     }
 
-    public Integer getCountOfPages(){
-        Long allBooksCount = bookDAO.getAllCount();
-        return (int) Math.ceil(allBooksCount/(double) Constants.RECORDS_PER_PAGE);
+    public Long getAllCount(){
+        return bookDAO.getAllCount();
     }
 
     public Book getById(Long id) {
@@ -50,7 +49,7 @@ public class BookService {
                 .map(Report::getBook).toList();
     }
 
-    public List<Book> getFreeBooks(String sort, Integer currentPage){
-        return bookDAO.getAllFreeBooks(sort,currentPage);
+    public List<Book> getFreeBooks(Integer currentPage, String sort){
+        return bookDAO.getAllFreeBooks(currentPage,sort);
     }
 }

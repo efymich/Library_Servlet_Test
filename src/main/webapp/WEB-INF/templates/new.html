@@ -3,7 +3,7 @@
 <div th:insert="~{header :: header}" th:with="pageTitle='Create New Student'"></div>
 <body>
     <h2>Create new user</h2>
-    <form method="post" th:action="@{/student}">
+    <form method="post" th:action="@{/students}">
         <div class="mb-3">
             <label for="input-studentName" class="form-label">Student name</label>
             <input type="text" class="form-control" id="input-studentName" th:name="studentName">

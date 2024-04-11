@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 public interface BaseDAO<T> {
-
     List<T> getAll();
     T getById(Long id);
 
@@ -13,6 +12,8 @@ public interface BaseDAO<T> {
     void update(T obj);
 
     void delete(Long id);
+
+    Long getAllCount();
 
     Set<String> getColumnNames(Class<T> entityClass);
 

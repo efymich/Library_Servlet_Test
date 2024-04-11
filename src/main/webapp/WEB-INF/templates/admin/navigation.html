@@ -8,7 +8,7 @@
             <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" th:href="@{/admin/reports}">Reports</a>
                 <a class="nav-link active" th:href="@{/admin/books}">Books</a>
-                <a class="nav-link active" th:href="@{/admin/student}">Students</a>
+                <a class="nav-link active" th:href="@{/admin/students}">Students</a>
                 <div th:if="${session.containsKey('student')}">
                     <a class="nav-link active" th:href="@{/logout}">Logout</a>
                 </div>

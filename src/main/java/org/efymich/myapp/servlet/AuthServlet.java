@@ -16,33 +16,28 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.servlet.IServletWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
-import java.io.IOException;
-
 @WebServlet(urlPatterns = "/login")
 public class AuthServlet extends HttpServlet {
     private TemplateEngine templateEngine;
     private AuthService authService;
 
-    @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         templateEngine = (TemplateEngine) getServletContext().getAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATTR);
         authService = (AuthService) getServletContext().getAttribute("authService");
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @SneakyThrows
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp){
         IServletWebExchange servletWebExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
         WebContext webContext = new WebContext(servletWebExchange);
 
         templateEngine.process("login", webContext, resp.getWriter());
     }
 
-    @Override
     @SneakyThrows
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         IServletWebExchange servletWebExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
-
         WebContext webContext = new WebContext(servletWebExchange);
 
         String studentName = req.getParameter("studentName");
@@ -52,7 +47,6 @@ public class AuthServlet extends HttpServlet {
                 .studentName(studentName)
                 .password(password)
                 .build();
-
         ValidationStudentDTO validationDTO = authService.checkPassword(inputStudent);
 
         if (validationDTO.isValid()) {

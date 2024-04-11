@@ -11,16 +11,16 @@ public class AuthService {
     private StudentDAO studentDAO;
 
     public ValidationStudentDTO checkPassword(Student inputStudent) {
-        Student student = studentDAO.getByName(inputStudent.getStudentName());
+        Student outputStudent = studentDAO.getByName(inputStudent.getStudentName());
 
-        if (student == null) {
+        if (outputStudent == null) {
             return ValidationStudentDTO.builder()
                     .valid(false)
                     .message("There is no such student")
                     .build();
         }
 
-        boolean flag = PasswordUtils.verifyPassword(inputStudent.getPassword(), student.getPassword());
+        boolean flag = PasswordUtils.verifyPassword(inputStudent.getPassword(), outputStudent.getPassword());
 
         if (!flag) {
             return ValidationStudentDTO.builder()
@@ -30,9 +30,8 @@ public class AuthService {
         } else {
             return ValidationStudentDTO.builder()
                     .valid(true)
-                    .student(student)
+                    .student(outputStudent)
                     .build();
         }
     }
-
 }

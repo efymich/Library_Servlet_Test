@@ -22,7 +22,6 @@ public class AuthFilter implements Filter {
         templateEngine = (TemplateEngine) filterConfig.getServletContext().getAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATTR);
     }
 
-    @Override
     @SneakyThrows
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain){
         HttpServletRequest httpServletRequest = (HttpServletRequest) req;

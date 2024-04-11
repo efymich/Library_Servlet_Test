@@ -15,16 +15,13 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
 @WebServlet(urlPatterns = {"/"})
 public class MenuServlet extends HttpServlet {
-
     private TemplateEngine templateEngine;
 
-    @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         templateEngine = (TemplateEngine) getServletContext().getAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATTR);
     }
 
-    @Override
     @SneakyThrows
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         IServletWebExchange servletWebExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);

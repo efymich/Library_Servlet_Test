@@ -1,6 +1,5 @@
 package org.efymich.myapp.dao;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.metamodel.Attribute;
 import jakarta.persistence.metamodel.EntityType;
@@ -26,21 +25,21 @@ public class BookDAO implements BaseDAO<Book>{
     @Override
     public List<Book> getAll() {
         Session session = sessionFactory.openSession();
-        Query<Book> query = session.createQuery("From Book b order by b.id", Book.class);
+        Query<Book> query = session.createQuery("From Book b order by b.bookId", Book.class);
         return query.getResultList();
     }
 
-    public List<Book> getAll(String sort, Integer currentPage) {
+    public List<Book> getAll(Integer currentPage, String sort) {
         Session session = sessionFactory.openSession();
         HibernateCriteriaBuilder builder = session.getCriteriaBuilder();
-        JpaCriteriaQuery<Book> critQuery = builder.createQuery(Book.class);
-        JpaRoot<Book> root = critQuery.from(Book.class);
+        JpaCriteriaQuery<Book> query = builder.createQuery(Book.class);
+        JpaRoot<Book> root = query.from(Book.class);
 
         if (sort != null && !sort.isEmpty()) {
-            critQuery.select(root).orderBy(builder.asc(root.get(sort)));
+            query.select(root).orderBy(builder.asc(root.get(sort)));
         }
 
-        Query<Book> booksQuery = session.createQuery(critQuery);
+        Query<Book> booksQuery = session.createQuery(query);
         booksQuery.setFirstResult((currentPage - 1) * Constants.RECORDS_PER_PAGE);
         booksQuery.setMaxResults(Constants.RECORDS_PER_PAGE);
         return booksQuery.getResultList();
@@ -95,29 +94,22 @@ public class BookDAO implements BaseDAO<Book>{
                 .collect(Collectors.toSet());
     }
 
-    public List<Book> getAllFreeBooks(String sort, Integer currentPage){
+    public List<Book> getAllFreeBooks(Integer currentPage, String sort){
         Session session = sessionFactory.openSession();
         HibernateCriteriaBuilder builder = session.getCriteriaBuilder();
         JpaCriteriaQuery<Book> query = builder.createQuery(Book.class);
         JpaRoot<Book> root = query.from(Book.class);
-        JpaJoin<Object, Object> join = root.join("report", JoinType.LEFT);
-        JpaPredicate predicate = builder.isNull(join.get("returnDate"));
-        join.on(predicate);
+        JpaJoin<Book, Report> join = root.join("report", JoinType.LEFT);
+        join.on(builder.isNull(join.get("returnDate")));
+        query.select(root).where(builder.isNull(join.get("rentalId")));
 
         if (sort != null && !sort.isEmpty()) {
             query.select(root).orderBy(builder.asc(root.get(sort)));
         }
 
-        Query<Book> query1 = session.createQuery(query);
-
-        query1.setFirstResult((currentPage - 1) * Constants.RECORDS_PER_PAGE);
-        query1.setMaxResults(Constants.RECORDS_PER_PAGE);
-
-//        Query<Book> query = session.createQuery("SELECT b FROM Book b " +
-//                "LEFT JOIN Report r ON b.id = r.book.id AND r.returnDate IS NULL " +
-//                "WHERE r.rentalId is null",Book.class);
-//        query.setFirstResult((currentPage - 1) * Constants.RECORDS_PER_PAGE);
-//        query.setMaxResults(Constants.RECORDS_PER_PAGE);
-        return query1.getResultList();
+        Query<Book> bookQuery = session.createQuery(query);
+        bookQuery.setFirstResult((currentPage - 1) * Constants.RECORDS_PER_PAGE);
+        bookQuery.setMaxResults(Constants.RECORDS_PER_PAGE);
+        return bookQuery.getResultList();
     }
 }

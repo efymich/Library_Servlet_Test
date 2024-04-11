@@ -7,7 +7,7 @@ import org.thymeleaf.templateresolver.WebApplicationTemplateResolver;
 import org.thymeleaf.web.IWebApplication;
 
 public class ThymeleafConfiguration {
-    public static final String TEMPLATE_ENGINE_ATTR = "org.efymich.myapp.thymeleaf.TemplateEngineInstance";
+    public static final String TEMPLATE_ENGINE_ATTR = "TemplateEngineInstance";
 
     public ITemplateEngine getTemplateEngine(IWebApplication application) {
         TemplateEngine templateEngine = new TemplateEngine();

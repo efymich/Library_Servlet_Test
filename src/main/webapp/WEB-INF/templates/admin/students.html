@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{header :: header}"></div>
+<body>
+    <div th:insert="~{admin/navigation :: navbar_admin}"></div>
+    <div class="container">
+        <form method="get" th:href="@{/students}">
+            <select id="currency" name="sort" class="form-select" style="width: min-content">
+                <option th:each="column : ${columnNames}" th:value="${column}" th:text="${column}"></option>
+            </select>
+            <button type="submit" class="btn btn-primary">Sort</button>
+            <table class="table table-border">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Role</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="student : ${students}">
+                    <td th:text="${student.studentId}">Id</td>
+                    <td th:text="${student.studentName}">Name</td>
+                    <td th:text="${student.role}">Role</td>
+                </tr>
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item" th:each=" i : ${#numbers.sequence(beginIndex,endIndex)}">
+                        <a class="page-link" th:href="@{/admin/students(page=${i}, sort=${session.sort})}" th:text="${i}"></a>
+                    </li>
+                </ul>
+            </nav>
+        </form>
+    </div>
+</body>
+</html>

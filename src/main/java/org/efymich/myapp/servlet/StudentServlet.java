@@ -10,26 +10,27 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import lombok.SneakyThrows;
 import org.efymich.myapp.config.ThymeleafConfiguration;
+import org.efymich.myapp.entity.Book;
 import org.efymich.myapp.entity.Student;
 import org.efymich.myapp.enums.Roles;
 import org.efymich.myapp.service.StudentService;
 import org.efymich.myapp.utils.PasswordUtils;
+import org.efymich.myapp.utils.Util;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.servlet.IServletWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
-import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-@WebServlet(urlPatterns = {"/student/*", "/admin/student"})
+@WebServlet(urlPatterns = {"/students/*", "/admin/students/*"})
 public class StudentServlet extends HttpServlet {
     private TemplateEngine templateEngine;
     private StudentService studentService;
     private Validator validator;
 
-    @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         templateEngine = (TemplateEngine) getServletContext().getAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATTR);
@@ -37,7 +38,6 @@ public class StudentServlet extends HttpServlet {
         validator = (Validator) getServletContext().getAttribute("validator");
     }
 
-    @Override
     @SneakyThrows
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         IServletWebExchange servletWebExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
@@ -46,16 +46,21 @@ public class StudentServlet extends HttpServlet {
         String pathInfo = req.getPathInfo();
         String servletPath = req.getServletPath();
 
-        if (servletPath.contains("admin")) {
-            String sortParameter = req.getParameter("sort");
-            Set<String> columnNames = studentService.getColumnNames(Student.class);
-            List<Student> students = studentService.getAll(sortParameter);
+        Integer page = req.getParameter("page") != null ? Integer.parseInt(req.getParameter("page")) : 1;
+        String sortParameter = req.getParameter("sort");
+        Set<String> columnNames = studentService.getColumnNames(Student.class);
 
+        Map<String, Object> paginationMap = Util.calculatePagination(studentService.getAllCount(),page);
+        req.getSession().setAttribute("sort", sortParameter);
+        webContext.setVariables(paginationMap);
+        webContext.setVariable("columnNames", columnNames);
+
+        if (servletPath.contains("admin")) {
+            List<Student> students = studentService.getAll(page,sortParameter);
 
             webContext.setVariable("students", students);
-            webContext.setVariable("columnNames", columnNames);
-            templateEngine.process("admin/student", webContext, resp.getWriter());
-        } else if (servletPath.equals("/student") && pathInfo.equals("/new")) {
+            templateEngine.process("admin/students", webContext, resp.getWriter());
+        } else if (servletPath.equals("/students") && pathInfo.equals("/new")) {
             templateEngine.process("new", webContext, resp.getWriter());
         } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);

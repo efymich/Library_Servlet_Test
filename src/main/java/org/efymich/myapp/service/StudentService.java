@@ -11,26 +11,19 @@ import java.util.Set;
 public class StudentService {
     private StudentDAO studentDAO;
 
-    public List<Student> getAll(String sortParameter) {
-        return studentDAO.getAll(sortParameter);
-    }
-
-    public Student getById(Long id) {
-        return studentDAO.getById(id);
+    public List<Student> getAll(Integer currentPage, String sortParameter) {
+        return studentDAO.getAll(currentPage, sortParameter);
     }
 
     public void create(Student student){
         studentDAO.create(student);
     }
 
-    public void update(Student updatedStudent) {
-        studentDAO.update(updatedStudent);
-    }
-
     public void delete(Long id){
         studentDAO.delete(id);
     }
 
+    public Long getAllCount(){ return studentDAO.getAllCount();}
     public Set<String> getColumnNames(Class<Student> studentClass) {
         return studentDAO.getColumnNames(studentClass);
     }

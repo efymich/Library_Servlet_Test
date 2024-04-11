@@ -8,25 +8,39 @@
         <input type="hidden" name="_method" value="DELETE">
         <button type="submit" class="btn btn-warning">Delete Old Records</button>
     </form>
-    <table class="table table-group-divider">
-        <thead>
-        <tr>
-            <th scope="col">Rental_id</th>
-            <th scope="col">Book</th>
-            <th scope="col">Student_Name</th>
-            <th scope="col">Rental_Date</th>
-            <th scope="col">Return_Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="report : ${reports}">
-            <td th:text="${report.rentalId}">Rental_id</td>
-            <td th:text="${report.book.title}">Book</td>
-            <td th:text="${report.student.studentName}">Student_Name</td>
-            <td th:text="${report.rentalDate}">Rental_Date</td>
-            <td th:text="${report.returnDate}">Return_Date</td>
-        </tr>
-        </tbody>
-    </table>
+    <form method="get" th:href="@{/reports}">
+        <select id="currency" name="sort" class="form-select" style="width: min-content">
+            <option th:each="column : ${columnNames}" th:value="${column}" th:text="${column}"></option>
+        </select>
+        <button type="submit" class="btn btn-primary">Sort</button>
+
+        <table class="table table-group-divider">
+            <thead>
+            <tr>
+                <th scope="col">Rental_id</th>
+                <th scope="col">Book</th>
+                <th scope="col">Student_Name</th>
+                <th scope="col">Rental_Date</th>
+                <th scope="col">Return_Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="report : ${reports}">
+                <td th:text="${report.rentalId}">Rental_id</td>
+                <td th:text="${report.book.title}">Book</td>
+                <td th:text="${report.student.studentName}">Student_Name</td>
+                <td th:text="${report.rentalDate}">Rental_Date</td>
+                <td th:text="${report.returnDate}">Return_Date</td>
+            </tr>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item" th:each=" i : ${#numbers.sequence(beginIndex,endIndex)}">
+                    <a class="page-link" th:href="@{/admin/reports(page=${i}, sort=${session.sort})}" th:text="${i}"></a>
+                </li>
+            </ul>
+        </nav>
+    </form>
 </body>
 </html>

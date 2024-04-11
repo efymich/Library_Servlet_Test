@@ -62,13 +62,10 @@ public class AppContextListener implements ServletContextListener {
         context.setAttribute("sessionFactory",sessionFactory);
         context.setAttribute("validator",validator);
 
-        context.setAttribute("authorDAO",authorDAO);
-
         context.setAttribute("reportService",reportService);
         context.setAttribute("bookService",bookService);
         context.setAttribute("studentService",studentService);
         context.setAttribute("authService",authService);
-
     }
 
     @Override
