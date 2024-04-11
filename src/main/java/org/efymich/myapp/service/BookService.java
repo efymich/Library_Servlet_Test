@@ -5,7 +5,6 @@ import org.efymich.myapp.dao.BookDAO;
 import org.efymich.myapp.dao.ReportDAO;
 import org.efymich.myapp.entity.Book;
 import org.efymich.myapp.entity.Report;
-import org.efymich.myapp.utils.Constants;
 
 import java.util.List;
 import java.util.Set;
@@ -23,16 +22,8 @@ public class BookService {
         return bookDAO.getAllCount();
     }
 
-    public Book getById(Long id) {
-        return bookDAO.getById(id);
-    }
-
     public void create(Book student) {
         bookDAO.create(student);
-    }
-
-    public void update(Book updatedStudent) {
-        bookDAO.update(updatedStudent);
     }
 
     public void delete(Long id) {
