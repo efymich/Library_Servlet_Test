@@ -4,7 +4,7 @@
 <body>
 <div th:insert="~{admin/navigation :: navbar_admin}"></div>
 <div class="container">
-    <form method="get" th:href="@{/books}">
+    <form method="get" th:action="@{/admin/books/}">
         <select id="currency" name="sort" class="form-select" style="width: min-content">
             <option th:each="column : ${columnNames}" th:value="${column}" th:text="${column}"></option>
         </select>
@@ -30,6 +30,13 @@
             </tr>
             </tbody>
         </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item" th:each=" i : ${#numbers.sequence(beginIndex,endIndex)}">
+                    <a class="page-link" th:href="@{/admin/books(page=${i}, sort=${session.sort})}" th:text="${i}"></a>
+                </li>
+            </ul>
+        </nav>
     </form>
 </div>
 </body>

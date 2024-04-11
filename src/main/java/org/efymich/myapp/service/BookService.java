@@ -5,6 +5,7 @@ import org.efymich.myapp.dao.BookDAO;
 import org.efymich.myapp.dao.ReportDAO;
 import org.efymich.myapp.entity.Book;
 import org.efymich.myapp.entity.Report;
+import org.efymich.myapp.utils.Constants;
 
 import java.util.List;
 import java.util.Set;
@@ -14,8 +15,13 @@ public class BookService {
     private BookDAO bookDAO;
     private ReportDAO reportDAO;
 
-    public List<Book> getAll(String sortParameter) {
-        return bookDAO.getAll(sortParameter);
+    public List<Book> getAll(String sortParameter, Integer currentPage) {
+        return bookDAO.getAll(sortParameter, currentPage);
+    }
+
+    public Integer getCountOfPages(){
+        Long allBooksCount = bookDAO.getAllCount();
+        return (int) Math.ceil(allBooksCount/(double) Constants.RECORDS_PER_PAGE);
     }
 
     public Book getById(Long id) {
@@ -44,7 +50,7 @@ public class BookService {
                 .map(Report::getBook).toList();
     }
 
-    public List<Book> getFreeBooks(){
-        return bookDAO.getAllFreeBooks();
+    public List<Book> getFreeBooks(String sort, Integer currentPage){
+        return bookDAO.getAllFreeBooks(sort,currentPage);
     }
 }

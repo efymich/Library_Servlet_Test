@@ -68,13 +68,8 @@ public class ReportServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp){
-        HttpSession session = req.getSession();
-
-        Student student = (Student) session.getAttribute("student");
-        String bookId = req.getParameter("bookId");
-
-        reportService.delete(Long.valueOf(bookId),student);
-        resp.sendRedirect(req.getContextPath() + "/profile");
+        reportService.deleteOldRecords();
+        resp.sendRedirect(req.getContextPath() + "/reports");
     }
 
     @SneakyThrows

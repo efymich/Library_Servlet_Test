@@ -84,6 +84,5 @@ public class StudentServlet extends HttpServlet {
             req.setAttribute("errorMessage", violations.iterator().next().getMessage());
             templateEngine.process("new",webContext, resp.getWriter());
         }
-
     }
 }

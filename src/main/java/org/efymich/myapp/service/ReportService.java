@@ -45,6 +45,10 @@ public class ReportService {
         reportDAO.delete(reportOfHeldBook.getRentalId());
     }
 
+    public void deleteOldRecords(){
+        reportDAO.deleteOldRecords();
+    }
+
     public Set<String> getColumnNames(Class<Report> reportClass) {
         return reportDAO.getColumnNames(reportClass);
     }

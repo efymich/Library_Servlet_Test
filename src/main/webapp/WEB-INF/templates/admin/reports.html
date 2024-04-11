@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<div th:insert="~{header :: header}"></div>
+<div th:insert="~{header :: header}" th:with="pageTitle='Reports'"></div>
 <body>
     <div th:insert="~{admin/navigation :: navbar_admin}"></div>
     <h2>Reports</h2>
-<!--    <div class="container">-->
-<!--        <ul class="list-group">-->
-<!--            <li class="list-group-item" th:each="report : ${reports}" th:text="${report.rentalDate}"></li>-->
-<!--        </ul>-->
-<!--    </div>-->
+    <form method="post" th:href="@{/reports}">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-warning">Delete Old Records</button>
+    </form>
     <table class="table table-group-divider">
         <thead>
         <tr>

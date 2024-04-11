@@ -37,6 +37,13 @@
                     </tr>
                 </tbody>
             </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item" th:each=" i : ${#numbers.sequence(beginIndex,endIndex)}">
+                        <a class="page-link" th:href="@{/books(page=${i}, sort=${session.sort})}" th:text="${i}"></a>
+                    </li>
+                </ul>
+            </nav>
         </form>
     </div>
 </body>

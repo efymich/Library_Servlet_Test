@@ -1,5 +1,9 @@
 package org.efymich.myapp.dao;
 
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaDelete;
+import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
 import org.efymich.myapp.entity.Book;
 import org.efymich.myapp.entity.Report;
@@ -8,6 +12,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
@@ -50,6 +56,30 @@ public class ReportDAO implements BaseDAO<Report> {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.remove(getById(id));
+        transaction.commit();
+    }
+
+    public void deleteOldRecords(){
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+//        Query<Report> query = session.createQuery("Delete From Report r Where r.returnDate is not null " +
+//                "and r.returnDate < DATESUB(CURRENT TIMESTAMP , :daysAmount)", Report.class);
+//        query.setParameter("daysAmount", ,);
+//        query.executeUpdate();
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaDelete<Report> criteriaDelete = builder.createCriteriaDelete(Report.class);
+        Root<Report> root = criteriaDelete.from(Report.class);
+
+        criteriaDelete.where(
+                builder.and(
+                        builder.isNotNull(root.get("returnDate")),
+                        builder.lessThan(root.get("returnDate"), LocalDateTime.now().minusDays(1))
+                )
+        );
+
+        int deletedCount = session.createMutationQuery(criteriaDelete).executeUpdate();
+
         transaction.commit();
     }
 
