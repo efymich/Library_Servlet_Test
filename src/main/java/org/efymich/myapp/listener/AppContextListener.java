@@ -3,6 +3,8 @@ package org.efymich.myapp.listener;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import liquibase.Contexts;
+import liquibase.LabelExpression;
 import liquibase.Liquibase;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.ClassLoaderResourceAccessor;
@@ -34,12 +36,10 @@ public class AppContextListener implements ServletContextListener {
         ThymeleafConfiguration thymeleafConfiguration = new ThymeleafConfiguration();
         ITemplateEngine templateEngine = thymeleafConfiguration.getTemplateEngine(application);
 
+        LiquibaseConfig liquibaseConfig = new LiquibaseConfig();
+        Liquibase liquibase = new Liquibase(LiquibaseConfig.CHANGELOGFILE, new ClassLoaderResourceAccessor(), new JdbcConnection(liquibaseConfig.getConnection()));
+        liquibase.update(new Contexts(), new LabelExpression());
 
-//        LiquibaseConfig liquibaseConfig = new LiquibaseConfig();
-//        String changelog = "src/main/resources/db/changelog/master.xml";
-//
-//        Liquibase liquibase = new Liquibase(changelog, new ClassLoaderResourceAccessor(), new JdbcConnection(liquibaseConfig.getConnection()));
-//        liquibase.update();
         // Config beans
         SessionFactory sessionFactory = new HibernateConfig().buildSessionFactory();
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();

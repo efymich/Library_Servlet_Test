@@ -6,8 +6,8 @@
         <!-- JDBC connection settings -->
         <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
         <property name="hibernate.connection.url">jdbc:oracle:thin:@//localhost:1521/ORCLPDB</property>
-        <property name="hibernate.connection.username">TESTUSER</property>
-        <property name="hibernate.connection.password">TESTUSER</property>
+        <property name="hibernate.connection.username">TESTHIBER</property>
+        <property name="hibernate.connection.password">TESTHIBER</property>
 
         <!-- SQL dialect for Oracle -->
         <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
@@ -22,6 +22,11 @@
 
         <!-- Drop and create the database schema on startup -->
         <property name="hibernate.hbm2ddl.auto">validate</property>
+
+        <!-- Liquibase integration -->
+        <property name="hibernate.listeners.create">org.liquibase.integration.hibernate.HibernateLiquibaseListener</property>
+        <property name="hibernate.liquibase.changeLog">classpath:/db/changelog/master.xml</property>
+
 
         <!-- Mapping files -->
         <!-- <mapping resource="com/example/YourEntity.hbm.xml"/> -->
