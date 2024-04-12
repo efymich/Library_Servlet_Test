@@ -5,19 +5,18 @@
     <div th:insert="~{navigation :: navbar}"></div>
     <h2>My books</h2>
     <div class="container" style="margin-top: 15px">
-        <form id="takeBook" method="post" th:action="@{/reports}">
-            <table class="table table-border">
-            <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Title</th>
-                <th scope="col">Author</th>
-                <th scope="col">Genre</th>
-                <th scope="col">Publication_Year</th>
-                <th scope="col">Give book back</th>
-            </tr>
-            </thead>
-            <tbody>
+        <table class="table table-border">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Genre</th>
+            <th scope="col">Publication_Year</th>
+            <th scope="col">Give book back</th>
+        </tr>
+        </thead>
+        <tbody>
             <tr th:each="book : ${myBooks}">
                 <td th:text="${book.bookId}">Id</td>
                 <td th:text="${book.title}">Title</td>
@@ -25,14 +24,15 @@
                 <td th:text="${book.genre}">Genre</td>
                 <td th:text="${book.publicationYear}">Publication_Year</td>
                 <td>
-                    <input type="hidden" name="_method" value="PUT">
-                    <input type="hidden" th:name="bookId" th:value="${book.bookId}">
-                    <button type="submit" class="btn btn-link" >Give book back</button>
+                    <form id="takeBook" method="post" th:action="@{/reports}">
+                        <input type="hidden" name="_method" value="PUT">
+                        <input type="hidden" th:name="bookId" th:value="${book.bookId}">
+                        <button type="submit" class="btn btn-link" >Give book back</button>
+                    </form>
                 </td>
             </tr>
-            </tbody>
+        </tbody>
         </table>
-        </form>
     </div>
 </body>
 </html>

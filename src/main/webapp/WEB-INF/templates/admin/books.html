@@ -9,35 +9,34 @@
             <option th:each="column : ${columnNames}" th:value="${column}" th:text="${column}"></option>
         </select>
         <button type="submit" class="btn btn-primary">Sort</button>
-
-        <table class="table table-group-divider">
-            <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Title</th>
-                <th scope="col">Author</th>
-                <th scope="col">Genre</th>
-                <th scope="col">Publication_Year</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="book : ${books}">
-                <td th:text="${book.bookId}">Id</td>
-                <td th:text="${book.title}">Title</td>
-                <td th:text="${book.author.authorName}">Author</td>
-                <td th:text="${book.genre}">Genre</td>
-                <td th:text="${book.publicationYear}">Publication_Year</td>
-            </tr>
-            </tbody>
-        </table>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item" th:each=" i : ${#numbers.sequence(beginIndex,endIndex)}">
-                    <a class="page-link" th:href="@{/admin/books(page=${i}, sort=${session.sort})}" th:text="${i}"></a>
-                </li>
-            </ul>
-        </nav>
     </form>
+    <table class="table table-group-divider">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Genre</th>
+            <th scope="col">Publication_Year</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.bookId}">Id</td>
+            <td th:text="${book.title}">Title</td>
+            <td th:text="${book.author.authorName}">Author</td>
+            <td th:text="${book.genre}">Genre</td>
+            <td th:text="${book.publicationYear}">Publication_Year</td>
+        </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item" th:each=" i : ${#numbers.sequence(beginIndex,endIndex)}">
+                <a class="page-link" th:href="@{/admin/books(page=${i}, sort=${session.sort})}" th:text="${i}"></a>
+            </li>
+        </ul>
+    </nav>
 </div>
 </body>
 </html>
